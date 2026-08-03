@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { useAccount, useReadContract } from 'wagmi';
-import { parseEther, formatEther } from 'viem';
-import { PWC_ADDRESS, VAULT_ADDRESS, PWC_ABI, VAULT_ABI } from './contracts';
+import { formatEther } from 'viem';
+import { PWC_ADDRESS, PWC_ABI } from './contracts';
 import { AppKitButton } from '@reown/appkit/react';
 import { AIEnergyCalculator } from './components/AIEnergyCalculator';
 import { PowerCreditsMint } from './components/PowerCreditsMint';
 import { GridSurgeCalculator } from './components/GridSurgeCalculator';
+import { PowerBlockMarketplace } from './components/PowerBlockMarketplace';
+import { PowerBlockVaultManager } from './components/PowerBlockVaultManager';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'dashboard' | 'vault' | 'marketplace' | 'ai-oracle' | 'power-credits' | 'grid-surge'>('dashboard');
   const [depositInput, setDepositInput] = useState<string>('');
-  const [transactions, setTransactions] = useState([
+  const [transactions] = useState([
     { id: 1, type: 'Stake', amount: '100 PWC', time: '2 hrs ago', status: 'Completed' },
     { id: 2, type: 'Reflection', amount: '+12.5 PWC', time: '5 hrs ago', status: 'Rewarded' },
   ]);
 
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
 
   // Read live $PWC balance from contract
   const { data: rawPwcBalance } = useReadContract({
@@ -108,7 +110,6 @@ export default function App() {
       <main className="max-w-6xl mx-auto">
         {activeTab === 'dashboard' && (
           <div className="space-y-6">
-            {/* Stat Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                 <span className="text-xs uppercase tracking-wider text-slate-400 font-medium">Wallet $PWC Balance</span>
@@ -132,7 +133,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Quick Actions & Recent Activity */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
                 <h3 className="text-lg font-bold text-white mb-1">Quick Deposit to Power Bank</h3>
@@ -181,23 +181,11 @@ export default function App() {
         {/* Grid Surge & ZK Vault View */}
         {activeTab === 'grid-surge' && <GridSurgeCalculator />}
 
-        {/* Vault Tab Placeholder */}
-        {activeTab === 'vault' && (
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
-            <span className="text-4xl">🏛️</span>
-            <h3 className="text-xl font-bold text-white mt-3">Power Block Vaults</h3>
-            <p className="text-sm text-slate-400 mt-1">Multi-year 5, 10, and 20-Year yield-bearing bond vaults.</p>
-          </div>
-        )}
+        {/* Marketplace View */}
+        {activeTab === 'marketplace' && <PowerBlockMarketplace />}
 
-        {/* Marketplace Tab Placeholder */}
-        {activeTab === 'marketplace' && (
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
-            <span className="text-4xl">🏪</span>
-            <h3 className="text-xl font-bold text-white mt-3">Tiered Royalty Marketplace</h3>
-            <p className="text-sm text-slate-400 mt-1">Secondary market trading for yield-bearing Power Blocks with EIP-2981 royalty discounts.</p>
-          </div>
-        )}
+        {/* Vault Tab View */}
+        {activeTab === 'vault' && <PowerBlockVaultManager />}
       </main>
     </div>
   );
