@@ -5,9 +5,10 @@ import { PWC_ADDRESS, VAULT_ADDRESS, PWC_ABI, VAULT_ABI } from './contracts';
 import { AppKitButton } from '@reown/appkit/react';
 import { AIEnergyCalculator } from './components/AIEnergyCalculator';
 import { PowerCreditsMint } from './components/PowerCreditsMint';
+import { GridSurgeCalculator } from './components/GridSurgeCalculator';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'vault' | 'marketplace' | 'ai-oracle' | 'power-credits'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'vault' | 'marketplace' | 'ai-oracle' | 'power-credits' | 'grid-surge'>('dashboard');
   const [depositInput, setDepositInput] = useState<string>('');
   const [transactions, setTransactions] = useState([
     { id: 1, type: 'Stake', amount: '100 PWC', time: '2 hrs ago', status: 'Completed' },
@@ -89,6 +90,15 @@ export default function App() {
             <span>🔋</span>
             <span>Power Credits</span>
           </button>
+          <button
+            onClick={() => setActiveTab('grid-surge')}
+            className={`px-3 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all flex items-center space-x-1 ${
+              activeTab === 'grid-surge' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>🌐</span>
+            <span>Grid Surge</span>
+          </button>
         </div>
 
         <AppKitButton />
@@ -168,6 +178,9 @@ export default function App() {
         {/* Power Credits ($ekWh) Tab View */}
         {activeTab === 'power-credits' && <PowerCreditsMint />}
 
+        {/* Grid Surge & ZK Vault View */}
+        {activeTab === 'grid-surge' && <GridSurgeCalculator />}
+
         {/* Vault Tab Placeholder */}
         {activeTab === 'vault' && (
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
@@ -189,4 +202,3 @@ export default function App() {
     </div>
   );
 }
-
