@@ -1,7 +1,12 @@
 // src/contracts.ts
 
-export const ECACHE_POWER_COIN_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
-export const POWER_BLOCK_VAULT_ADDRESS = "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8";
-export const MARKETPLACE_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
-export const AI_ENERGY_ORACLE_ADDRESS = "0xD7A7010C731771B33B0D28E1e32B034E571F771B";
-export const POWER_CREDITS_ADDRESS = "0x0000000000000000000000000000000000000000"; // Replace with your Remix VM address
+export const CHAIN_ID = 8453; // Base Mainnet
+export const CHAIN_NAME = "Base Mainnet";
+
+export const PWC_CONTRACT_ADDRESS = "0xa417861843f6f77c34068cE2bF9a8aD16887e0C3";
+
+// Ensure your contract registry object points to the new address:
+export const CONTRACT_ADDRESSES = {
+  PWC: "0xa417861843f6f77c34068cE2bF9a8aD16887e0C3",
+  // Other addresses (Vault, Marketplace, Oracle) will be updated when deployed
+};
